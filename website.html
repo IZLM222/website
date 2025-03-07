@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZLM | Personal Profile</title>
+    <link rel="stylesheet" href=".vscode/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Light Mode Variables */
+        :root {
+            --bg-color: #f4f4f4;
+            --text-color: #333;
+            --header-bg: linear-gradient(135deg, #1F1C2C, #928DAB);
+            --nav-bg: rgba(31, 28, 44, 0.9);
+            --section-bg: white;
+            --footer-bg: #1F1C2C;
+            --link-color: #3498db;
+            --hover-color: #4e3989;
+            --section-color: #6b94b1;
+            --transition-duration: 0.5s;
+        }
+
+        /* Dark Mode Variables */
+        .dark-mode {
+            --bg-color: #181818;
+            --text-color: #f4f4f4;
+            --header-bg: linear-gradient(135deg, #333, #181818);
+            --nav-bg: rgba(34, 34, 34, 0.9);
+            --section-bg: #282828;
+            --footer-bg: #222;
+            --link-color: #66c2ff;
+            --hover-color: #403c45;
+            --section-color: #91d1ff;
+        }
+
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color var(--transition-duration) ease,
+                      color var(--transition-duration) ease;
+        }
+
+        /* Smooth transition for all elements */
+        * {
+            transition: background-color var(--transition-duration) ease,
+                      color var(--transition-duration) ease,
+                      border-color var(--transition-duration) ease,
+                      box-shadow var(--transition-duration) ease;
+        }
+
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            background: var(--nav-bg);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .dark-mode-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .dark-mode-toggle .icon {
+            font-size: 18px;
+            transition: transform 0.5s ease;
+        }
+
+        .dark-mode .dark-mode-toggle .icon {
+            transform: rotate(360deg);
+        }
+
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #1F1C2C, #928DAB), var(--header-bg);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+        }
+
+        body.dark-mode {
+            transition: none;
+        }
+
+        header, nav, section, footer {
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        header {
+            background: var(--header-bg);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        header img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 10px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            animation: navFadeIn 1s ease-in-out;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--section-color);
+            transform: scale(1.1);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+        }
+
+        section {
+            padding: 50px 20px;
+            margin: 20px;
+            background-color: var(--section-bg);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .show-section {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--hover-color);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Image Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Social Media Section Styles */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 15px 25px;
+            border-radius: 50px;
+            background: var(--section-bg);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .social-link i {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link span {
+            font-weight: 500;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .social-link:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Social Media Brand Colors */
+        .social-link.telegram {
+            color: #0088cc;
+            border: 2px solid #0088cc;
+        }
+
+        .social-link.telegram:hover {
+            background: #0088cc;
+            color: white;
+        }
+
+        .social-link.instagram {
+            color: #E1306C;
+            border: 2px solid #E1306C;
+        }
+
+        .social-link.instagram:hover {
+            background: #E1306C;
+            color: white;
+        }
+
+        .social-link.linkedin {
+            color: #0077b5;
+            border: 2px solid #0077b5;
+        }
+
+        .social-link.linkedin:hover {
+            background: #0077b5;
+            color: white;
+        }
+
+        /* Dark mode adjustments for social links */
+        .dark-mode .social-link {
+            background: var(--section-bg);
+        }
+
+        .dark-mode .social-link.linkedin {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        .dark-mode .social-link.linkedin:hover {
+            background: #fff;
+            color: #333;
+        }
+
+        /* Blog Carousel */
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+        }
+
+        .carousel article {
+            min-width: 300px;
+            flex: 0 0 auto;
+            background: var(--section-bg);
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel article:hover {
+            transform: scale(1.05);
+        }
+
+        .carousel img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: var(--hover-color);
+            width: 0%;
+            z-index: 1002;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .project-card {
+            background: var(--section-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .project-description {
+            color: var(--text-color);
+            font-size: 0.9em;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--nav-bg);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes navFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading Animations */
+        .loading-animation {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .loading-animation.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .slide-in {
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Quote Section Styles */
+        .quote-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .quote {
+            font-size: 1.4em;
+            line-height: 1.6;
+            font-style: italic;
+            color: var(--text-color);
+            margin: 20px 0;
+            position: relative;
+            padding: 20px 40px;
+        }
+
+        .quote::before,
+        .quote::after {
+            content: '"';
+            font-size: 3em;
+            color: var(--section-color);
+            position: absolute;
+            opacity: 0.3;
+        }
+
+        .quote::before {
+            left: 0;
+            top: -10px;
+        }
+
+        .quote::after {
+            right: 0;
+            bottom: -30px;
+        }
+
+        .quote-author {
+            font-size: 1.1em;
+            color: var(--section-color);
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        /* Admin Styles */
+        .admin-login {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .admin-status {
+            display: none;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .admin-login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: var(--bg-color);
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-login-form input {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .admin-login-form button {
+            padding: 8px 12px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.9em;
+        }
+
+        .admin-controls {
+            display: none;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .admin-mode .admin-controls {
+            display: flex;
+        }
+
+        .edit-btn, .add-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .edit-btn:hover, .add-btn:hover {
+            opacity: 0.9;
+        }
+
+        .edit-form, .add-form {
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--bg-color);
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .edit-form textarea, .add-form textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .save-btn, .cancel-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .save-btn:hover, .cancel-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scroll-progress"></div>
+    
+    <div id="admin-panel" style="display: none;">
+        <div id="admin-login-container">
+            <h3>Admin Login</h3>
+            <form id="admin-login-form">
+                <input type="password" id="admin-password" placeholder="Enter admin password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div id="admin-login-error"></div>
+        </div>
+        <div id="admin-status" style="display: none;">
+            <p>Logged in as Admin</p>
+            <button id="admin-logout">Logout</button>
+        </div>
+    </div>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <span class="icon">🌤️</span>
+        <span class="text">Light</span>
+    </button>
+
+    <header class="loading-animation">
+        <img id="profile-image" src="Screenshot 2025-03-04 231747.jpg" alt="Your Name" class="fade-in">
+        <h1 class="fade-up">IZLM</h1>
+        <p class="fade-up">Personal Profile | No ex, No next, For me...</p>
+    </header>
+
+    <nav>
+        <a href="#intro">Introduction</a>
+        <a href="#quote">Book Quote</a>
+        <a href="#reflection">Reflection</a>
+        <a href="#blog">Blog</a>
+        <a href="#photo-gallery">Photo Gallery</a>
+        <a href="#social">Social Media</a>
+    </nav>
+
+    <section id="intro" class="loading-animation">
+        <h2>Introduction</h2>
+        <p class="fade-up">Xush kelibsiz Islombekning bekorchi staff veb-sahifasiga. Siz bu yerdan hech qanday naf olmaysiz, ammo ushbu sahifaga qiziqib kirganingiz uchun hurmatim cheksizdir). Bu mening ilk veb-sahifam, bunda mening ma'lumotlarimni, o'qigan kitoblarim iqtiboslarni, taasurotlarimni yozib boraman.</p>
+    </section>
+
+    <section id="quote" class="quote-section loading-animation">
+        <h2>Book Quotes</h2>
+        <div class="quote fade-up">
+            "The only way to do great work is to love what you do."
+            <div class="quote-author">– Steve Jobs</div>
+        </div>
+        <div class="quote fade-up">
+            "In three words I can sum up everything I've learned about life: it goes on."
+            <div class="quote-author">– Robert Frost</div>
+        </div>
+        <div class="quote fade-up">
+            "Biz umidlarimiz darajasigacha ko'tarilmaymiz, balki tayyorgarlik darajasiga tushamiz" Arhilohdan iqtibos keltirilgan. Siz maqsadlaringiz darajasiga ko'tarilmaysiz, balki tizimingiz darajasiga tushasiz. Molekulalar atomlardan tashkil topgani singari, katta natijalar atom odatlaridan iboratdir."
+            <div class="book-name">–Atom Odatlari </div>
+        </div>
+    </section>
+
+    <section id="reflection">
+        <h2>Personal Reflection</h2>
+        <p>#time/Telegram channel/IZLM
+
+            </p>O‘tayotgan har bir lahza inson hayoti va umrining bir qismidir. Kimgadir vaqt yetmaydi, kimdir esa vaqtni behuda sarflashni istaydi. Insonlar bekorchilikdan qiynalishlari mumkin, kun tezroq o'tishi uchun vaqtni har xil be'mani narsalarga sarflashadi. Boshqalarga vaqt yetmaydi. Ular doim shoshilishadi, juda band bo`lishadi va doim ulgurushmaydi. Bu borada bir maqol hayolimga keldi:"nimani eksang, shuni oʻrasan!" . Qilgan har bir say-harakatimiz samarasiz oʻtmaydi, faqat oʻz mevasini berishi uchun bir oz sabr qilish kerak.</p>
+            </p>Ayrim inson oʻtkazgan behuda vaqtini qachonki devorga boshi tekkandagina koʻzi ochiladi. Chunki hayotida katta yoʻqotish boʻlgan yokida muvofiqqiyatsizlikka uchragan boʻladi, shunda inson behuda oʻtkazgan vaqtiga afsus-nadomat chekadi, ammo buni hech qanday foydasi boʻlmaydi chunki vaqtni orqaga qaytara olmaydi.<p>
+            Vaqtni oilaga, qarindoshlarga, doʻstlarga/dugonalarga toʻgʻri taqsimlay olish lozim. Har oʻtgan vaqtni qadrlagan holda ular bilan birga boʻlish, ularga eʼtibor ajratish darkor, zero keyinchalik shunday imkoniyat boʻlmasligi ham mumkin!
+            </p> Har o‘tayotgan daqiqadan nimadir foyda olib qolishi kerak. </p>
+            73:20</p>
+    </section>
+
+    <section id="blog">
+        <h2>Blog Posts</h2>
+        <div class="carousel">
+            <article>
+                <h3>Tarovih Namozi</h3>
+             <p>Tarovih Namozi o'qish uchun yangi ochilgan
+             masjidga eng yaqin o'rtog'im bilan bordim.</p>
+                </p>To'g'risini aytsam Masjid ichki dizayni menga juda yoqdi ayniqsa o'rtadagi naqlishli gumbazi.</p>
+            </style>
+                <img src="mosque.jpg" alt="Friends enjoying a day out" style="max-width: 30%; height: auto; border-radius: 8px;">
+            </article>
+            <article>
+                <h3>Blog Post Title 2</h3>
+                <p>loading...</p>
+            </article>
+            <article>
+                <h3>Blog Post Title 3</h3>
+                <p>loading...</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="photo-gallery" class="loading-animation">
+        <h2 class="fade-up">Photo Gallery</h2>
+        <div class="gallery">
+            <div class="gallery-item fade-in">
+                <img src="20240519_142849.jpg" alt="Memorable Moment 1">
+                <div class="gallery-caption">friends</div>
+            </div>
+            <div class="gallery-item fade-in">
+                <img src="childhood.jpg" alt="Memorable Moment 2">
+                <div class="gallery-caption">childhood</div>
+            </div>
+            <div class="gallery-item fade-in">
+                <img src="city night.jpg" alt="Memorable Moment 3">
+                <div class="gallery-caption">night vibe</div>
+            </div>
+            <div class="gallery-item fade-in">
+                <img src="sunset.jpg" alt="Memorable Moment 4">
+                <div class="gallery-caption">sunsetz</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="social" class="loading-animation">
+        <h2 class="fade-up">Follow Me</h2>
+        <div class="social-links">
+            <a href="https://t.me/+FIwhvBQvNZM3ZGJi" target="_blank" class="social-link telegram fade-up">
+                <i class="fab fa-telegram"></i>
+                <span>Telegram</span>
+            </a>
+            <a href="https://www.instagram.com/is_x_a" target="_blank" class="social-link instagram fade-up">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            <a href="https://www.linkedin.com/in/https://www.linkedin.com/in/islombek-xushvaqtov-34646a326?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="social-link linkedin fade-up">
+                <i class="fab fa-linkedin"></i>
+                <span>LinkedIn</span>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Is_X_a. All Rights Reserved.</p>
+    </footer>
+
+    <div class="scroll-top">↑</div>
+
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        // Smooth Dark Mode Toggle
+        function toggleDarkMode() {
+            const body = document.body;
+            const button = document.querySelector('.dark-mode-toggle');
+            const icon = button.querySelector('.icon');
+            const text = button.querySelector('.text');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.textContent = '🌙';
+                text.textContent = 'Dark';
+                document.getElementById('profile-image').src = "night.jpg";
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                icon.textContent = '🌤️';
+                text.textContent = 'Light';
+                document.getElementById('profile-image').src = "Screenshot 2025-03-04 231747.jpg";
+                localStorage.setItem('darkMode', 'false');
+            }
+        }
+
+        // Initialize dark mode from localStorage
+        if (localStorage.getItem('darkMode') === 'true') {
+            const button = document.querySelector('.dark-mode-toggle');
+            const icon = button.querySelector('.icon');
+            const text = button.querySelector('.text');
+            
+            document.body.classList.add('dark-mode');
+            icon.textContent = '🌙';
+            text.textContent = 'Dark';
+            document.getElementById('profile-image').src = "night.jpg";
+        }
+
+        // Smooth Scrolling Effect
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll Fade-In Animation
+        function revealSections() {
+            const sections = document.querySelectorAll("section");
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (sectionTop <= windowHeight * 0.8) {
+                    section.classList.add('show-section');
+                }
+            });
+        }
+
+        window.addEventListener("scroll", revealSections);
+        revealSections(); // Run initially to check visible sections
+
+        // Scroll Progress Bar
+        window.onscroll = function() {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        };
+
+        // Scroll to top functionality
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Loading Animations
+        function initLoadingAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('loaded');
+                        // Trigger child animations
+                        const animatedChildren = entry.target.querySelectorAll('.fade-up, .fade-in, .slide-in');
+                        animatedChildren.forEach((child, index) => {
+                            setTimeout(() => {
+                                child.style.opacity = '1';
+                                child.style.transform = 'none';
+                            }, index * 200);
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '50px'
+            });
+
+            document.querySelectorAll('.loading-animation').forEach(el => observer.observe(el));
+        }
+
+        // Initialize animations when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initLoadingAnimations();
+        });
+    </script>
+</body>
+</html>
